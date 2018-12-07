@@ -24,6 +24,15 @@ public class CustomStartMenu : MonoBehaviour {
     void Start () {
         
 	}
+
+    void VariableSetDefault(){
+        weatherOption = 0;
+    }
+
+    void SwitchUnit()
+    {
+        selectByDistance = !selectByDistance;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -32,8 +41,7 @@ public class CustomStartMenu : MonoBehaviour {
 
     public void ToTargetByTime()
     {
-        this.selectByDistance = false;
-        this.selectByTime = true;
+        
         primaryUnit.text = "hour";
         secondaryUnit.text = "minute";
         primaryField.placeholder.GetComponent<Text>().text = "Enter hour";
