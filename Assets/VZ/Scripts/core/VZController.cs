@@ -715,7 +715,7 @@ public class VZController : MonoBehaviour
       if (Input.GetKey("escape"))
       {
 # if UNITY_ANDROID && !UNITY_EDITOR && !VZ_GEARVR && !VZ_SNAPDRAGONVR
-         UnityEngine.VR.VRSettings.enabled = false;
+         UnityEngine.XR.XRSettings.enabled = false;
 # endif
          Application.Quit();
       }
