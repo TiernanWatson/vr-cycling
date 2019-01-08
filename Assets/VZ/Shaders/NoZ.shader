@@ -1,6 +1,4 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-Shader "VZ/NoZ" {
+﻿Shader "VZ/NoZ" {
 
    Properties 
    { 
@@ -40,7 +38,7 @@ Shader "VZ/NoZ" {
          v2f vert (appdata_full v)
          {
             v2f o;
-            o.pos = UnityObjectToClipPos (v.vertex);
+            o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
             o.color = v.color * _Color;
             o.texcoord = v.texcoord;
             return o;

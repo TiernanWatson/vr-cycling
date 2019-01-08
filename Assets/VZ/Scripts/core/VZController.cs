@@ -513,7 +513,7 @@ public class VZController : MonoBehaviour
 #endif
 
       // SteamVR
-      IsSteamVR = (UnityEngine.XR.XRSettings.loadedDeviceName == "OpenVR" && UnityEngine.XR.XRDevice.isPresent);
+      IsSteamVR = (UnityEngine.VR.VRSettings.loadedDeviceName == "OpenVR" && UnityEngine.VR.VRDevice.isPresent);
 
       // Init plugin
       VZPlugin.Init(Application.dataPath + Path.DirectorySeparatorChar + "Plugins");
@@ -610,8 +610,8 @@ public class VZController : MonoBehaviour
          mHasHmd = true;
 # endif
 #else
-         mHasHmd = UnityEngine.XR.XRDevice.isPresent;
-         UnityEngine.XR.XRSettings.enabled = mHasHmd;
+         mHasHmd = UnityEngine.VR.VRDevice.isPresent;
+         UnityEngine.VR.VRSettings.enabled = mHasHmd;
 #endif
       }
 
@@ -715,7 +715,7 @@ public class VZController : MonoBehaviour
       if (Input.GetKey("escape"))
       {
 # if UNITY_ANDROID && !UNITY_EDITOR && !VZ_GEARVR && !VZ_SNAPDRAGONVR
-         UnityEngine.XR.XRSettings.enabled = false;
+         UnityEngine.VR.VRSettings.enabled = false;
 # endif
          Application.Quit();
       }
