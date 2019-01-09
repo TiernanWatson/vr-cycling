@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
@@ -80,16 +81,23 @@ public class CustomMenuScript : MonoBehaviour {
     private void storeChoices()
     {
         Debug.Log("CustomStart init");
-        PlayerPrefs.SetInt("primaryUnit", int.Parse(primaryField.text));
-        Debug.Log("primary unit set to " + PlayerPrefs.GetInt("primaryUnit"));
-        PlayerPrefs.SetInt("secondaryUnit", int.Parse(secondaryField.text));
-        Debug.Log("secondary unit set to " + PlayerPrefs.GetInt("secondaryUnit"));
-        PlayerPrefs.SetInt("weatherChoice", weatherDropDown.value);
-        Debug.Log("weather choice set to " + PlayerPrefs.GetInt("weatherChoice"));
-        PlayerPrefs.SetInt("terrainChoice", terrainDropDown.value);
-        Debug.Log("terrain choice set to " + PlayerPrefs.GetInt("terrainChoice"));
-        PlayerPrefs.SetString("workOutTarget", workOutTarget);
-        Debug.Log("work out target set to " + PlayerPrefs.GetString("workOutTarget"));
+        if (primaryField.text == "" || secondaryField.text == "")
+        {
+            Debug.Log("please enter value in input field");
+        }else
+        {
+            PlayerPrefs.SetInt("primaryUnit", int.Parse(primaryField.text));
+            Debug.Log("primary unit set to " + PlayerPrefs.GetInt("primaryUnit"));
+            PlayerPrefs.SetInt("secondaryUnit", int.Parse(secondaryField.text));
+            Debug.Log("secondary unit set to " + PlayerPrefs.GetInt("secondaryUnit"));
+            PlayerPrefs.SetInt("weatherChoice", weatherDropDown.value);
+            Debug.Log("weather choice set to " + PlayerPrefs.GetInt("weatherChoice"));
+            PlayerPrefs.SetInt("terrainChoice", terrainDropDown.value);
+            Debug.Log("terrain choice set to " + PlayerPrefs.GetInt("terrainChoice"));
+            PlayerPrefs.SetString("workOutTarget", workOutTarget);
+            Debug.Log("work out target set to " + PlayerPrefs.GetString("workOutTarget"));
+        }
+        
     }
 
     public void StartButtonPressed()
