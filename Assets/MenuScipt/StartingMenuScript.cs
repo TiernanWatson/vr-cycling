@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
+// TBD : load scene at ~ line 94 ------------------------------------ //
+
 public class StartingMenuScript : MonoBehaviour {
 
 	// Use this for initialization
@@ -18,7 +20,7 @@ public class StartingMenuScript : MonoBehaviour {
     public void QuickStart()
     {
         Debug.Log("QuickStart init");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+//        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void QuitGame()

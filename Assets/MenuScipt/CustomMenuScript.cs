@@ -4,11 +4,19 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
+// TBD : load scene at ~ line 94 ------------------------------------ //
+
+// --- Player pref value:
+// (int) primaryUnit (0...99)
+// (int) secondaryUnit (0...99)
+// (int) weatherChoice (0 sunny, 1 cloudy, 2 rainy, 3 windy, 4 misty)
+// (int) terrainChoice (0 plain road, 1 mountain, 2 city)
+// (string) workOutTarget (time/distance)
+
 
 public class CustomMenuScript : MonoBehaviour {
 
-    bool selectByTime = true;
-    bool selectByDistance = false;
+    public string workOutTarget = "time";
     public Button targetButton;
     public InputField primaryField;
     public InputField secondaryField;
@@ -28,59 +36,61 @@ public class CustomMenuScript : MonoBehaviour {
 
     }
 
-    public void ResetVariable()
+    private void ResetVariable()
     {
-        selectByTime = true;
-        selectByDistance = false;
-        targetButton.GetComponentInChildren<Text>().text = "Target By Time";
-        primaryField.placeholder.GetComponent<Text>().text = "Hour(s)";
-        secondaryField.placeholder.GetComponent<Text>().text = "Minute(s)";
+        ToTargetByTime();
         weatherDropDown.value = 0;
         terrainDropDown.value = 0;
+        Debug.Log("variable reset");
     }
 
     private void ToTargetByTime()
     {
-        this.selectByTime = true;
-        this.selectByDistance = false;
+        workOutTarget = "time";
         targetButton.GetComponentInChildren<Text>().text = "Target By Time";
         primaryField.placeholder.GetComponent<Text>().text = "Hour(s)";
         secondaryField.placeholder.GetComponent<Text>().text = "Minute(s)";
-        Debug.Log("switch from target by distance to target by time");
+        Debug.Log("switch to target by time");
     }
 
     private void ToTargetByDistance()
     {
-        this.selectByTime = false;
-        this.selectByDistance = true;
+        workOutTarget = "distance";
         targetButton.GetComponentInChildren<Text>().text = "Target By Distance";
         primaryField.placeholder.GetComponent<Text>().text = "km";
         secondaryField.placeholder.GetComponent<Text>().text = "m";
-        Debug.Log("switch from target by time to target by distance");
+        Debug.Log("switch to target by distance");
     }
 
     public void SwitchTargetButtonPressed()
     {
-        if (selectByTime)
+        if (workOutTarget == "time")
         {
             ToTargetByDistance();
-        }else
+        }else if(workOutTarget == "distance")
         {
             ToTargetByTime();
         }
     }
 
-    public void StartButtonPressed()
+    private void storeChoices()
     {
         Debug.Log("CustomStart init");
-        if (selectByDistance)
-        {
-            // return km and m
-        }
-        else
-        {
-            // return hour and minute
-        }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+        PlayerPrefs.SetInt("primaryUnit", int.Parse(primaryField.text));
+        Debug.Log("primary unit set to " + PlayerPrefs.GetInt("primaryUnit"));
+        PlayerPrefs.SetInt("secondaryUnit", int.Parse(secondaryField.text));
+        Debug.Log("secondary unit set to " + PlayerPrefs.GetInt("secondaryUnit"));
+        PlayerPrefs.SetInt("weatherChoice", weatherDropDown.value);
+        Debug.Log("weather choice set to " + PlayerPrefs.GetInt("weatherChoice"));
+        PlayerPrefs.SetInt("terrainChoice", terrainDropDown.value);
+        Debug.Log("terrain choice set to " + PlayerPrefs.GetInt("terrainChoice"));
+        PlayerPrefs.SetString("workOutTarget", workOutTarget);
+        Debug.Log("work out target set to " + PlayerPrefs.GetString("workOutTarget"));
+    }
+
+    public void StartButtonPressed()
+    {
+        storeChoices();
+//        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
