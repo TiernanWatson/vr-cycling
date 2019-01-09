@@ -13,6 +13,10 @@ using System.Collections.Generic;
 // (int) terrainChoice (0 plain road, 1 mountain, 2 city)
 // (string) workOutTarget (time/distance)
 
+// press start and values will be record
+// press back and page will be reset
+// press target method will change text and placeholder
+
 
 public class CustomMenuScript : MonoBehaviour {
 
