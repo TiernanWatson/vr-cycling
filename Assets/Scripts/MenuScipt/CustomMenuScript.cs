@@ -46,7 +46,14 @@ public class CustomMenuScript : MonoBehaviour {
         ToTargetByTime();
         weatherDropDown.value = 0;
         terrainDropDown.value = 0;
+        ResetInputField();
         Debug.Log("variable reset");
+    }
+
+    private void ResetInputField()
+    {
+        primaryField.text = "";
+        secondaryField.text = "";
     }
 
     private void ToTargetByTime()
@@ -71,9 +78,11 @@ public class CustomMenuScript : MonoBehaviour {
     {
         if (workOutTarget == "time")
         {
+            ResetInputField();
             ToTargetByDistance();
         }else if(workOutTarget == "distance")
         {
+            ResetInputField();
             ToTargetByTime();
         }
     }
