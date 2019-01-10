@@ -47,4 +47,16 @@ public class Spline : MonoBehaviour
         DestroyImmediate(lineList[lineList.Count - 1].gameObject);
         lineList.RemoveAt(lineList.Count - 1);
     }
+
+    public float GetTotalLength()
+    {
+        float finalLength = 0f;
+
+        foreach (Line l in lineList)
+        {
+            finalLength += l.GetLength();
+        }
+
+        return finalLength;
+    }
 }

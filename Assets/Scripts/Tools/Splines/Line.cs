@@ -17,4 +17,9 @@ public class Line : MonoBehaviour
         p1 += amount;
         p2 += amount;
     }
+
+    public virtual float GetLength()
+    {
+        return Vector3.Distance(p2, p1);
+    }
 }

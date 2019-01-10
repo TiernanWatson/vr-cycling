@@ -22,4 +22,20 @@ public class SplineEditor : Editor
         if (GUILayout.Button("Remove Line/Curve"))
             spline.RemoveLine();
     }
+
+    private void OnSceneGUI()
+    {
+        foreach (Line l in spline.lineList)
+        {
+            if (l is BezierCurve)
+            {
+                BezierCurve b = (BezierCurve)l;
+                Handles.DrawBezier(b.p1, b.p2, b.controlPoint1, b.controlPoint2, Color.white, null, 1f);
+            }
+            else
+            {
+                Handles.DrawLine(l.p1, l.p2);
+            }
+        }
+    }
 }
