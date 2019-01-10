@@ -47,7 +47,7 @@ public class CustomMenuScript : MonoBehaviour {
         weatherDropDown.value = 0;
         terrainDropDown.value = 0;
         ResetInputField();
-        Debug.Log("variable reset");
+        Debug.Log("UI variable reset");
     }
 
     private void ResetInputField()
