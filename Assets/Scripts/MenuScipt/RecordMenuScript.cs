@@ -51,6 +51,43 @@ public class RecordMenuScript : MonoBehaviour {
         return output;
     }
 
+    public string getTerrain(int input)
+    {
+        if(input == 0)
+        {
+            return "Plain Road";
+        }else if(input == 1)
+        {
+            return "Mountain";
+        }else
+        {
+            return "City";
+        }
+    }
+
+    public string getWeather(int input)
+    {
+        if (input == 0)
+        {
+            return "Sunny";
+        }
+        else if (input == 1)
+        {
+            return "Cloudy";
+        }
+        else if (input == 2)
+        {
+            return "Rainy";
+        }
+        else if (input == 3)
+        {
+            return "Windy";
+        }else
+        {
+            return "Misty";
+        }
+    }
+
     public void UpdateRecord()
     {
 
@@ -60,9 +97,9 @@ public class RecordMenuScript : MonoBehaviour {
         timeTakenVal.text = ToHoursAndMinutes(playerStat.timeTravelled);
         averageSpeedVal.text = playerStat.speed.ToString() + " km / hr";
         greatestSpeedVal.text = playerStat.topSpeed.ToString() + " km / hr";
-        dateVal.text = "";
-        terrainVal.text = "";
-        weatherVal.text = "";
+        dateVal.text = playerStat.date;
+        terrainVal.text = getTerrain(playerStat.terrain);
+        weatherVal.text = getWeather(playerStat.weather);
         heartRateVal.text = playerStat.heartrate.ToString() + " BPM";
     }
 }
