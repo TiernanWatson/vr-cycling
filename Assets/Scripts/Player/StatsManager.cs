@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class StatsManager : MonoBehaviour
 {
@@ -9,7 +10,12 @@ public class StatsManager : MonoBehaviour
     private void Start()
     {
         localWorkoutNo = PlayerPrefs.GetInt("workoutNo");
+
         playerStats = new PlayerStats();
+        playerStats.terrain = PlayerPrefs.GetInt("terrainChoice");
+        playerStats.weather = PlayerPrefs.GetInt("weatherChoice");
+        playerStats.workoutTarget = PlayerPrefs.GetString("workoutTarget");
+        playerStats.date = DateTime.Now.ToString("dd/MM/yyyy");
     }
 
     private void Update()

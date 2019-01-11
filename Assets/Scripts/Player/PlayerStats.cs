@@ -8,6 +8,10 @@ public class PlayerStats
     public float topBPM = 0f;
     public float distanceTravelled = 0f;
     public float timeTravelled = 0f;
+    public string date = "";
+    public string workoutTarget = "";
+    public int terrain = 0;
+    public int weather = 0;
 
     // These are not useful to be saved
     [System.NonSerialized]
