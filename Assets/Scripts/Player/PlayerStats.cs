@@ -9,6 +9,7 @@ public class PlayerStats
     public float distanceTravelled = 0f;
     public float timeTravelled = 0f;
 
+    // These are not useful to be saved
     [System.NonSerialized]
     public float speed = 0f;
     [System.NonSerialized]

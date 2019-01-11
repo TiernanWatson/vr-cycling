@@ -1,27 +1,58 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class StatsUIManager : MonoBehaviour
 {
+    private bool haltUpdate = false;
+
     [SerializeField]
     private StatsManager statsManager;
 
     [SerializeField]
+    private GameObject stateTextContainer;
+    [SerializeField]
     private Text statTextBox;
+
+    [SerializeField]
+    private GameObject recordContainer;
+    [SerializeField]
+    private Text endTopSpeed;
+    [SerializeField]
+    private Text endTopBPM;
+    [SerializeField]
+    private Text endTimeTaken;
 
 	private void Start()
     {
         if (statsManager == null)
         {
             Debug.LogError("No StatsManager assigned in StatsUIManager.  Destroying object.");
-
             Destroy(this.gameObject);
+            return;
         }
+
+        DefaultActiveStates();
+
+        GameState.Instance.CrossFinishEvent += UpdateRecordScreen;
 	}
-	
-	private void Update()
+
+    private void DefaultActiveStates()
     {
+        statTextBox.gameObject.SetActive(true);
+        recordContainer.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        GameState.Instance.CrossFinishEvent -= UpdateRecordScreen;
+    }
+
+    private void Update()
+    {
+        if (haltUpdate)
+            return;
+
         statTextBox.text = StatsToText(statsManager.Stats);
 	}
 
@@ -34,5 +65,24 @@ public class StatsUIManager : MonoBehaviour
         text += "Time Elapsed: " + stats.timeTravelled + "s";
 
         return text;
+    }
+
+    private void UpdateRecordScreen(bool isOn)
+    {
+        haltUpdate = !isOn;
+
+        PlayerStats stats = statsManager.Stats;
+
+        recordContainer.SetActive(isOn);
+        stateTextContainer.SetActive(!isOn);
+
+        endTopSpeed.text = stats.topSpeed + " m/s";
+        endTopBPM.text = stats.topBPM + " BPM";
+        endTimeTaken.text = stats.timeTravelled + " s";
+    }
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }
