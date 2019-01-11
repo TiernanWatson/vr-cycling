@@ -92,6 +92,7 @@ public class CustomMenuScript : MonoBehaviour {
         Debug.Log("CustomStart init");
         if (primaryField.text == "" || secondaryField.text == "")
         {
+            FindObjectOfType<DialogueTrigger>().TriggerErrorMessage();
             Debug.Log("please enter value in input field");
         }else
         {
