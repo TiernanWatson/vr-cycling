@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
-// TBD : load scene at ~ line 94 ------------------------------------ //
-
 // --- Player pref value:
 // (int) primaryUnit (0...99)
 // (int) secondaryUnit (0...99)
@@ -113,6 +111,6 @@ public class CustomMenuScript : MonoBehaviour {
     public void StartButtonPressed()
     {
         storeChoices();
-//        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("DevMap");
     }
 }

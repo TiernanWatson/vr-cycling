@@ -20,7 +20,7 @@ public class StartingMenuScript : MonoBehaviour {
     public void QuickStart()
     {
         Debug.Log("QuickStart init");
-//        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("DevMap");
     }
 
     public void QuitGame()

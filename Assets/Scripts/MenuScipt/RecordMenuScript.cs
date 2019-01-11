@@ -14,15 +14,15 @@ public class RecordMenuScript : MonoBehaviour {
     public Text weatherVal;
     public Text heartRateVal;
 
-    // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    void Start()
+    {
+        UpdateRecord();
+    }
+
+    public void ResetVariable()
+    {
+        records.value = 0;
+    }
 
     void UpdateRecord()
     {
