@@ -4,13 +4,15 @@ using System.Collections;
 
 public class RecordMenuScript : MonoBehaviour {
 
-    public Button distance;
-    public Button timeTaken;
-    public Button averageSpeed;
-    public Button greatestSpeed;
-    public Button terrain;
-    public Button weather;
-    public Button heartRate;
+    public Dropdown records;
+    public Text distanceVal;
+    public Text timeTakenVal;
+    public Text averageSpeedVal;
+    public Text greatestSpeedVal;
+    public Text dateVal;
+    public Text terrainVal;
+    public Text weatherVal;
+    public Text heartRateVal;
 
     // Use this for initialization
     void Start () {
@@ -21,4 +23,16 @@ public class RecordMenuScript : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    void UpdateRecord()
+    {
+        distanceVal.text = "";
+        timeTakenVal.text = "";
+        averageSpeedVal.text = "";
+        greatestSpeedVal.text = "";
+        dateVal.text = "";
+        terrainVal.text = "";
+        weatherVal.text = "";
+        heartRateVal.text = "";
+    }
 }
