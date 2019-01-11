@@ -17,7 +17,8 @@ using System.Collections.Generic;
 // press target method will change text and placeholder
 
 
-public class CustomMenuScript : MonoBehaviour {
+public class CustomMenuScript : MonoBehaviour
+{
 
     public string workOutTarget = "time";
     public Button targetButton;
@@ -30,7 +31,7 @@ public class CustomMenuScript : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -78,21 +79,24 @@ public class CustomMenuScript : MonoBehaviour {
         {
             ResetInputField();
             ToTargetByDistance();
-        }else if(workOutTarget == "distance")
+        }
+        else if (workOutTarget == "distance")
         {
             ResetInputField();
             ToTargetByTime();
         }
     }
 
-    private void storeChoices()
+    private bool storeChoices()
     {
         Debug.Log("CustomStart init");
         if (primaryField.text == "" || secondaryField.text == "")
         {
             FindObjectOfType<DialogueTrigger>().TriggerErrorMessage();
             Debug.Log("please enter value in input field");
-        }else
+            return false;
+        }
+        else
         {
             PlayerPrefs.SetInt("primaryUnit", int.Parse(primaryField.text));
             Debug.Log("primary unit set to " + PlayerPrefs.GetInt("primaryUnit"));
@@ -104,13 +108,17 @@ public class CustomMenuScript : MonoBehaviour {
             Debug.Log("terrain choice set to " + PlayerPrefs.GetInt("terrainChoice"));
             PlayerPrefs.SetString("workOutTarget", workOutTarget);
             Debug.Log("work out target set to " + PlayerPrefs.GetString("workOutTarget"));
+            return true;
         }
-        
+
     }
 
     public void StartButtonPressed()
     {
-        storeChoices();
-        SceneManager.LoadScene("DevMap");
+        if (storeChoices())
+        {
+            FindObjectOfType<DialogueManager>().EndDialogue();
+            SceneManager.LoadScene("DevMap");
+        }
     }
 }
