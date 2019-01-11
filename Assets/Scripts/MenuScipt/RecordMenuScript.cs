@@ -31,15 +31,15 @@ public class RecordMenuScript : MonoBehaviour {
 
     public void DropDownOptionUpdate()
     {
-        records.ClearOptions();
-        List<string> dropDownOptions = new List<string> { };
-        for (int i = 0; i < PlayerPrefs.GetInt("workoutNo"); i++)
+        List<string> recordOptions = new List<string> { };
+        for(int i = 0; i < PlayerPrefs.GetInt("workoutNo"); i++)
         {
-            dropDownOptions.Add("Work Out " + (i+1));
+            recordOptions.Add("Work Out " + (i + 1));
         }
-        records.AddOptions(dropDownOptions);
-
+        records.ClearOptions();
+        records.AddOptions(recordOptions);
     }
+
 
     public string ToHoursAndMinutes(float input)
     {
