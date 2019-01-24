@@ -55,7 +55,7 @@ public class CustomMenuScript : MonoBehaviour
         secondaryField.text = "";
     }
 
-    private void ToTargetByTime()
+    public void ToTargetByTime()
     {
         workOutTarget = "time";
         targetButton.GetComponentInChildren<Text>().text = "Target By Time";
@@ -64,7 +64,7 @@ public class CustomMenuScript : MonoBehaviour
         Debug.Log("switch to target by time");
     }
 
-    private void ToTargetByDistance()
+    public void ToTargetByDistance()
     {
         workOutTarget = "distance";
         targetButton.GetComponentInChildren<Text>().text = "Target By Distance";
