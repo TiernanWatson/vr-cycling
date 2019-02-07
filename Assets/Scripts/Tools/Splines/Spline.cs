@@ -32,6 +32,9 @@ public class Spline : MonoBehaviour
 
         Line newLine = toMake.GetComponent<Line>();
 
+        Vector3 diff = transform.position;
+        newLine.TranslatePoints(diff);
+
         // So lines connect move subline to end of last
         if (lineList.Count > 0)
         {
@@ -46,6 +49,25 @@ public class Spline : MonoBehaviour
     {
         DestroyImmediate(lineList[lineList.Count - 1].gameObject);
         lineList.RemoveAt(lineList.Count - 1);
+    }
+
+    public Vector3 GetPointAtDistance(float distance, out Vector3 forward)
+    {
+        float distanceLeft = distance;
+
+        Debug.Log("There is: " + distance + "m to go");
+
+        int i = 0;
+        while (lineList[i].GetLength() < distanceLeft)
+        {
+            distanceLeft -= lineList[i].GetLength();
+            i++;
+            Debug.Log("There is: " + distanceLeft + "m to go");
+        }
+
+        forward = lineList[i].GetLineForward();
+
+        return lineList[i].GetPointDistance(distanceLeft);
     }
 
     public float GetTotalLength()

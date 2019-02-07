@@ -18,6 +18,18 @@ public class Line : MonoBehaviour
         p2 += amount;
     }
 
+    public virtual Vector3 GetPointDistance(float distance)
+    {
+        float distanceWeight = distance / GetLength();
+
+        return Vector3.Lerp(p1, p2, distanceWeight);
+    }
+
+    public virtual Vector3 GetLineForward()
+    {
+        return (p2 - p1).normalized;
+    }
+
     public virtual float GetLength()
     {
         return Vector3.Distance(p2, p1);

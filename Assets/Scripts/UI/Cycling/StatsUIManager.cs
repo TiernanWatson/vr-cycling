@@ -58,11 +58,11 @@ public class StatsUIManager : MonoBehaviour
 
     private string StatsToText(PlayerStats stats)
     {
-        string text = "Top Speed: " + stats.topSpeed + "m/s \n";
-        text += "Current Speed: " + stats.speed + "m/s \n";
-        text += "Current Heartrate: " + stats.heartrate + "BPM \n";
-        text += "Distance Travelled: " + stats.distanceTravelled + "m \n";
-        text += "Time Elapsed: " + stats.timeTravelled + "s";
+        string text = "Top Speed: " + stats.topSpeed + " m/s \n";
+        text += "Current Speed: " + stats.speed + " m/s \n";
+        text += "Current Heartrate: " + stats.heartrate + " BPM \n";
+        text += "Distance Travelled: " + (int)stats.distanceTravelled + " m \n";
+        text += "Time Elapsed: " + (int)stats.timeTravelled + " s";
 
         return text;
     }

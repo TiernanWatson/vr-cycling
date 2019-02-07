@@ -4,12 +4,14 @@ using UnityEngine;
 public class StatsManager : MonoBehaviour
 {
     private int localWorkoutNo = 0;
+    private float startTime;
 
     private PlayerStats playerStats;
 
     private void Start()
     {
         localWorkoutNo = PlayerPrefs.GetInt("workoutNo");
+        startTime = Time.time;
 
         playerStats = new PlayerStats();
         playerStats.terrain = PlayerPrefs.GetInt("terrainChoice");
@@ -20,7 +22,9 @@ public class StatsManager : MonoBehaviour
 
     private void Update()
     {
-        playerStats.distanceTravelled = (int)VZPlayer.Controller.Distance;
+        playerStats.timeTravelled = Time.time - startTime;
+
+        playerStats.distanceTravelled = VZPlayer.Controller.Distance;
 
         // The following only works when bike is connected (not keyboard control)
         if (!VZPlayer.Controller.IsBikeConnected())
