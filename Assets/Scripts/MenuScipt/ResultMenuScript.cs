@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
-public class ResultMenu : MonoBehaviour
+public class ResultMenuScript : MonoBehaviour
 {
     public PlayerStats playerStat;
     public string targetRecord;

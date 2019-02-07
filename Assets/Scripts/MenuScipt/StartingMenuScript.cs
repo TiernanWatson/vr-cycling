@@ -3,8 +3,6 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
-// TBD : load scene at ~ line 94 ------------------------------------ //
-
 public class StartingMenuScript : MonoBehaviour {
 
     // Use this for initialization
