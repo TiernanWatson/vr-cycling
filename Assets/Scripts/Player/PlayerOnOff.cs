@@ -3,18 +3,18 @@ using System.Collections;
 
 public class PlayerOnOff : MonoBehaviour
 {
-	private void Start()
+	private void OnEnable()
     {
-        GameState.Instance.CrossFinishEvent += ChangeState;
+        GameController.Instance.CrossFinishLine += DisablePlayer;
 	}
 
     private void OnDisable()
     {
-        GameState.Instance.CrossFinishEvent -= ChangeState;
+        GameController.Instance.CrossFinishLine -= DisablePlayer;
     }
 
-    private void ChangeState(bool state)
+    private void DisablePlayer()
     {
-        GetComponent<VZPlayer>().enabled = !state;
+        GetComponent<VZPlayer>().enabled = false;
     }
 }

@@ -8,6 +8,6 @@ public class FinishLineHandler : MonoBehaviour
         if (!other.CompareTag("Player"))
             return;
 
-        GameState.Instance.CrossedFinish = true;
+        GameController.Instance.FinishSession();
     }
 }

@@ -4,16 +4,20 @@ using UnityEngine.SceneManagement;
 
 public class StatsUIManager : MonoBehaviour
 {
+    // Stops updates happening after finish
     private bool haltUpdate = false;
 
+    // Holds all the players statistics
     [SerializeField]
     private StatsManager statsManager;
 
+    // Mid-game statistic displayers
     [SerializeField]
     private GameObject stateTextContainer;
     [SerializeField]
     private Text statTextBox;
 
+    // End result displayers
     [SerializeField]
     private GameObject recordContainer;
     [SerializeField]
@@ -34,7 +38,7 @@ public class StatsUIManager : MonoBehaviour
 
         DefaultActiveStates();
 
-        GameState.Instance.CrossFinishEvent += UpdateRecordScreen;
+        GameController.Instance.CrossFinishLine += ShowResultScreen;
 	}
 
     private void DefaultActiveStates()
@@ -45,7 +49,7 @@ public class StatsUIManager : MonoBehaviour
 
     private void OnDisable()
     {
-        GameState.Instance.CrossFinishEvent -= UpdateRecordScreen;
+        GameController.Instance.CrossFinishLine -= ShowResultScreen;
     }
 
     private void Update()
@@ -67,14 +71,14 @@ public class StatsUIManager : MonoBehaviour
         return text;
     }
 
-    private void UpdateRecordScreen(bool isOn)
+    private void ShowResultScreen()
     {
-        haltUpdate = !isOn;
+        haltUpdate = false;
 
         PlayerStats stats = statsManager.Stats;
 
-        recordContainer.SetActive(isOn);
-        stateTextContainer.SetActive(!isOn);
+        recordContainer.SetActive(true);
+        stateTextContainer.SetActive(false);
 
         endTopSpeed.text = stats.topSpeed + " m/s";
         endTopBPM.text = stats.topBPM + " BPM";

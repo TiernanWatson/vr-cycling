@@ -2,12 +2,12 @@
 using UnityEngine.SceneManagement;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Windows.Speech;
+//using UnityEngine.Windows.Speech;
 
 public class VoiceController : MonoBehaviour
 {
     // linking all menu object + menu script to access methods
-    public GameObject startingMenu;
+   /* public GameObject startingMenu;
     public StartingMenuScript startingMenuScript;
     public GameObject customStartMenu;
     public CustomMenuScript customMenuScript;
@@ -115,5 +115,5 @@ public class VoiceController : MonoBehaviour
         {
             keywordAction.Invoke();
         }
-    }
+    }*/
 }

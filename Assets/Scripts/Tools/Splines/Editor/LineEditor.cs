@@ -30,8 +30,9 @@ public class LineEditor : Editor
         Handles.DrawLine(worldP1, worldP2);
 
         // Checks if Unity is in global or local mode
-        gizmoRotation = Tools.pivotRotation == PivotRotation.Global ?
-            Quaternion.identity : line.transform.rotation;
+        gizmoRotation = Tools.pivotRotation == PivotRotation.Global 
+            ? Quaternion.identity 
+            : line.transform.rotation;
 
         DrawPoint(worldP1, ref line.p1);
         DrawPoint(worldP2, ref line.p2);

@@ -1,25 +1,59 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public delegate void GameFinish();
+
 public class GameController : MonoBehaviour
 {
-    [SerializeField]
-    float cycleDistance;
+    public event GameFinish CrossFinishLine;
 
-    [SerializeField]
-    Spline layoutSpline;
+    // Singleton class
+    private static GameController instance;
 
-    [SerializeField]
-    GameObject finishLine;
+    // Total distance to cycle (set in start screen)
+    private float cycleDistance;
 
-    void Start()
+    // Spline describing track layout
+    [SerializeField]
+    private Spline layoutSpline;
+
+    // Finish line prefab to spawn
+    [SerializeField]
+    private GameObject finishLine;
+
+    private void Awake()
     {
-        //cycleDistance = PlayerPrefs.GetFloat("primaryUnit") * 1000f + PlayerPrefs.GetFloat("secondaryUnit");
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("Multiple game controllers in the scene.  Destroying: " + gameObject.name);
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        cycleDistance = PlayerPrefs.GetInt("primaryUnit") * 1000f + PlayerPrefs.GetInt("secondaryUnit");
+
+        Debug.Log("CD; " + cycleDistance);
+
+        float trackLength = layoutSpline.GetTotalLength();
+
+        Debug.Log("TL: " + trackLength);
+
+        // Can't place finish line beyond track length unless a loop
+        if (/*!layoutSpline.isLoop && */cycleDistance > trackLength)
+        {
+            cycleDistance = trackLength;
+        }
 
         PlaceFinishLine();
     }
 
-    void PlaceFinishLine()
+    private void PlaceFinishLine()
     {
         Vector3 lineForward;
 
@@ -27,10 +61,27 @@ public class GameController : MonoBehaviour
 
         Quaternion rotation = Quaternion.LookRotation(lineForward, Vector3.up);
 
-        rotation *= Quaternion.Euler(-90f, 0f, 0f);
-
-        Debug.Log("Making finish line");
-
+        // Spawn finish line in direction line is going at correct distance
         Instantiate(finishLine, point, rotation);
     }
+
+    public void FinishSession()
+    {
+        CrossFinishLine.Invoke();
+    }
+
+    #region Public Properties
+
+    public static GameController Instance
+    {
+        get
+        {
+            if (instance == null)
+                Debug.LogError("Trying to access non-existent game controller.");
+            
+            return instance;
+        }
+    }
+
+    #endregion
 }

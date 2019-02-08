@@ -22,6 +22,7 @@ public class Spline : MonoBehaviour
 
     public void AddLine(bool isBezier)
     {
+        // Need to make new Unity components this way
         GameObject toMake = new GameObject("SubLine " + lineList.Count.ToString());
         toMake.transform.parent = this.transform;
 
@@ -32,14 +33,11 @@ public class Spline : MonoBehaviour
 
         Line newLine = toMake.GetComponent<Line>();
 
-        Vector3 diff = transform.position;
-        newLine.TranslatePoints(diff);
-
-        // So lines connect move subline to end of last
+        // Attach new line to last line by moving desired amount
         if (lineList.Count > 0)
         {
-            Line lastLine = lineList[lineList.Count - 1];
-            newLine.TranslatePoints(lastLine.p2 - lastLine.p1);
+            Vector3 lastPoint = lineList[lineList.Count - 1].p2;
+            newLine.TranslatePoints(lastPoint);
         }
 
         lineList.Add(newLine);
