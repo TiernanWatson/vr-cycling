@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using UnityEngine.SceneManagement;
-using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.Windows.Speech;
+using UnityEngine.UI;
 
-public class VoiceController : MonoBehaviour
-{
-    // linking all menu object + menu script to access methods
-   /* public GameObject startingMenu;
+public class VoiceCommandReceiver : MonoBehaviour {
+
+    public GameObject startingMenu;
     public StartingMenuScript startingMenuScript;
     public GameObject customStartMenu;
     public CustomMenuScript customMenuScript;
@@ -17,43 +15,32 @@ public class VoiceController : MonoBehaviour
     public ResultMenuScript resultMenuScript;
     public GameObject current;
 
-    // Voice command variables
-    private Dictionary<string, System.Action> keyActs = new Dictionary<string, System.Action>();
-    private KeywordRecognizer recognizer;
+    private Dictionary<string, System.Action> activityDictionary = new Dictionary<string, System.Action>();
 
-    //Variables for sound playback.
-    private AudioSource soundSource;
-    public AudioClip[] sounds;
 
     // Use this for initialization
-    void Start()
-    {
-        // initialise soundSource
-        soundSource = GetComponent<AudioSource>();
+    void Start () {
         // add specific actions for different menu
         AddMainMenuActions();
+
         // add utility actions
-        keyActs.Add("help", CallHelpMenu);
-        keyActs.Add("back", NavigateBack);
-        // initialise recognizer and start it
-        recognizer = new KeywordRecognizer(keyActs.Keys.ToArray());
-        recognizer.OnPhraseRecognized += OnKeywordsRecognized;
-        recognizer.Start();
+        activityDictionary.Add("help", CallHelpMenu);
+        activityDictionary.Add("back", NavigateBack);
     }
 
     void AddMainMenuActions()
     {
         // adding links between keyword and actions
-        keyActs.Add("quick start", NavigateQuickStart);
-        keyActs.Add("custom start", NavigateCustomStart);
-        keyActs.Add("record menu", NavigateRecord);
-        keyActs.Add("quit", QuitGame);
+        activityDictionary.Add("quick start", NavigateQuickStart);
+        activityDictionary.Add("custom start", NavigateCustomStart);
+        activityDictionary.Add("record menu", NavigateRecord);
+        activityDictionary.Add("quit", QuitGame);
     }
 
     void AddCustomMenuActions()
     {
-        keyActs.Add("target by distance", customMenuScript.ToTargetByDistance);
-        keyActs.Add("target by time", customMenuScript.ToTargetByTime);
+        activityDictionary.Add("target by distance", customMenuScript.ToTargetByDistance);
+        activityDictionary.Add("target by time", customMenuScript.ToTargetByTime);
         // TBD add further voice actions
     }
 
@@ -107,13 +94,19 @@ public class VoiceController : MonoBehaviour
 
     }
 
-    void OnKeywordsRecognized(PhraseRecognizedEventArgs args)
+    void onActivityResult(string recognizedText)
     {
+        string lower = recognizedText.ToLower();
         System.Action keywordAction;
-        Debug.Log("Command: " + args.text);
-        if (keyActs.TryGetValue(args.text, out keywordAction))
+        Debug.Log("Command: " + lower);
+        if (activityDictionary.TryGetValue(lower, out keywordAction))
         {
             keywordAction.Invoke();
         }
-    }*/
+    }
+
+    // Update is called once per frame
+    void Update () {
+	
+	}
 }
