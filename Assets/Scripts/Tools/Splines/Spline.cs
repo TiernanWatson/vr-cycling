@@ -2,11 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[ExecuteInEditMode]
 public class Spline : MonoBehaviour
 {
-    public bool isLoop = true;
+    [SerializeField]
+    private bool isLoop = true;
 
-    public List<Line> lineList = new List<Line>();
+    [SerializeField]
+    private List<Line> lineList = new List<Line>();
 
     public void Reset()
     {
@@ -14,29 +17,55 @@ public class Spline : MonoBehaviour
 
         int childCount = transform.childCount;
 
+        // Destroys all child curves/lines
         for (int i = childCount - 1; i >= 0; i--)
         {
             DestroyImmediate(transform.GetChild(i).gameObject);
         }
     }
 
-    public void AddLine(bool isBezier)
+    private void Update()
+    {
+        // Check that list has correct lines (might not if someone deletes something in editor)
+        if (transform.childCount != lineList.Count)
+        {
+            UpdateList();
+        }
+    }
+
+    private void UpdateList()
+    {
+        lineList = new List<Line>();
+
+        // Go through each child and add its line component to list
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Line line = transform.GetChild(i).GetComponent<Line>();
+
+            if (line)
+            {
+                lineList.Add(line);
+            }
+            else
+            {
+                Debug.LogWarning("Something in the spline that is not a line: " + gameObject.name);
+            }
+        }
+    }
+
+    public void AddLine<LineType>() where LineType : Line
     {
         // Need to make new Unity components this way
         GameObject toMake = new GameObject("SubLine " + lineList.Count.ToString());
         toMake.transform.parent = this.transform;
-
-        if (isBezier)
-            toMake.AddComponent<BezierCurve>();
-        else
-            toMake.AddComponent<Line>();
-
+        toMake.AddComponent<LineType>();
+        
         Line newLine = toMake.GetComponent<Line>();
 
         // Attach new line to last line by moving desired amount
         if (lineList.Count > 0)
         {
-            Vector3 lastPoint = lineList[lineList.Count - 1].p2;
+            Vector3 lastPoint = lineList[lineList.Count - 1].WorldPoint2;
             newLine.TranslatePoints(lastPoint);
         }
 
@@ -79,4 +108,18 @@ public class Spline : MonoBehaviour
 
         return finalLength;
     }
+
+    #region Public Properties
+
+    public bool Loopable
+    {
+        get { return isLoop; }
+    }
+
+    public List<Line> Lines
+    {
+        get { return lineList; }
+    }
+
+    #endregion
 }

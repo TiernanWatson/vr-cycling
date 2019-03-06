@@ -38,19 +38,15 @@ public class GameController : MonoBehaviour
     {
         cycleDistance = PlayerPrefs.GetInt("primaryUnit") * 1000f + PlayerPrefs.GetInt("secondaryUnit");
 
-        Debug.Log("CD; " + cycleDistance);
-
         float trackLength = layoutSpline.GetTotalLength();
 
-        Debug.Log("TL: " + trackLength);
-
         // Can't place finish line beyond track length unless a loop
-        if (/*!layoutSpline.isLoop && */cycleDistance > trackLength)
+        if (!layoutSpline.Loopable && cycleDistance > trackLength)
         {
             cycleDistance = trackLength;
         }
 
-        PlaceFinishLine();
+        //PlaceFinishLine();
     }
 
     private void PlaceFinishLine()
