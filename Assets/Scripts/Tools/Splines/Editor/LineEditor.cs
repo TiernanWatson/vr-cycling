@@ -5,46 +5,80 @@ using System.Collections;
 [CustomEditor(typeof(Line))]
 public class LineEditor : Editor
 {
-    private const float handleSize = 0.05f;
-    private const float pickSize = 0.05f;
+    // Sizes used for selecting points in the scene
+    private const float HANDLE_SIZE = 0.05f;
+    private const float PICK_SIZE = 0.05f;
 
-    private Vector3 currentPoint;
+    // True if editor is in world space editing mode
+    protected bool isWorldSpace;
 
+    // Point developer has currently selected for editing
+    private Vector3 selectedPoint;
+
+    // World space points of the line start and end (cant ref properties in draw point)
     protected Vector3 worldP1;
     protected Vector3 worldP2;
 
-    protected Quaternion gizmoRotation;
-    protected Transform targetTransform;
-
+    // Line that is being edited
     private Line line;
+
+    private void Awake()
+    {
+        isWorldSpace = Tools.pivotRotation == PivotRotation.Global;
+    }
+
+    public override void OnInspectorGUI()
+    {
+        line = target as Line;
+
+        // Allow user to switch between world and local space editing
+        isWorldSpace = Tools.pivotRotation == PivotRotation.Global;
+
+        Vector3 point1Input = EditorGUILayout.Vector3Field("Point 1", isWorldSpace ? line.WorldPoint1 : line.LocalPoint1);
+        Vector3 point2Input = EditorGUILayout.Vector3Field("Point 1", isWorldSpace ? line.WorldPoint2 : line.LocalPoint2);
+
+        if (isWorldSpace)
+        {
+            line.WorldPoint1 = point1Input;
+            line.WorldPoint2 = point2Input;
+        }
+        else
+        {
+            line.LocalPoint1 = point1Input;
+            line.LocalPoint2 = point2Input;
+        }
+    }
 
     protected virtual void OnSceneGUI()
     {
         line = target as Line;
-        targetTransform = line.transform;
 
-        // Transform line points from local to world space
-        worldP1 = line.transform.TransformPoint(line.p1);
-        worldP2 = line.transform.TransformPoint(line.p2);
+        worldP1 = line.WorldPoint1;
+        worldP2 = line.WorldPoint2;
 
-        Handles.DrawLine(worldP1, worldP2);
+        DrawLine();
 
-        // Checks if Unity is in global or local mode
-        gizmoRotation = Tools.pivotRotation == PivotRotation.Global 
-            ? Quaternion.identity 
-            : line.transform.rotation;
+        DrawPoint(ref worldP1);
+        DrawPoint(ref worldP2);
 
-        DrawPoint(worldP1, ref line.p1);
-        DrawPoint(worldP2, ref line.p2);
+        line.WorldPoint1 = worldP1;
+        line.WorldPoint2 = worldP2;
     }
 
-    protected void DrawPoint(Vector3 point, ref Vector3 update)
+    protected virtual void DrawLine()
     {
-        if (currentPoint.Equals(point))
+        Handles.DrawLine(worldP1, worldP2);
+    }
+
+    protected void DrawPoint(ref Vector3 point)
+    {
+        Quaternion handleRotation = isWorldSpace ? Quaternion.identity : line.transform.rotation;
+
+        if (selectedPoint.Equals(point))
         {
             EditorGUI.BeginChangeCheck();
 
-            Vector3 handlePoint = Handles.DoPositionHandle(point, gizmoRotation);
+            Vector3 handlePoint = Handles.DoPositionHandle(point, handleRotation);
 
             // Handle was moved if true so update referenced point
             if (EditorGUI.EndChangeCheck())
@@ -52,19 +86,18 @@ public class LineEditor : Editor
                 Undo.RecordObject(line, "Line Point Move");
                 EditorUtility.SetDirty(line);
 
-                update = targetTransform.InverseTransformPoint(handlePoint);
-                currentPoint = handlePoint;
+                point = selectedPoint = handlePoint;
             }
-
-            return;
         }
-
-        // Allow point to be selected
-        float sizeMultiplier = HandleUtility.GetHandleSize(point);
-
-        if (Handles.Button(point, gizmoRotation, sizeMultiplier * handleSize, sizeMultiplier * pickSize, Handles.DotCap))
+        else
         {
-            currentPoint = point;
+            // Handle selection of this point if its not currently selected
+            float sizeMultiplier = HandleUtility.GetHandleSize(point);
+
+            if (Handles.Button(point, handleRotation, sizeMultiplier * HANDLE_SIZE, sizeMultiplier * PICK_SIZE, Handles.DotCap))
+            {
+                selectedPoint = point;
+            }
         }
     }
     

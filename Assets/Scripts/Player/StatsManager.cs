@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class StatsManager : MonoBehaviour
 {
-    private int localWorkoutNo = 0;
+    private int localWorkoutNo;
     private float startTime;
 
     private PlayerStats playerStats;
@@ -13,11 +13,13 @@ public class StatsManager : MonoBehaviour
         localWorkoutNo = PlayerPrefs.GetInt("workoutNo");
         startTime = Time.time;
 
-        playerStats = new PlayerStats();
-        playerStats.terrain = PlayerPrefs.GetInt("terrainChoice");
-        playerStats.weather = PlayerPrefs.GetInt("weatherChoice");
-        playerStats.workoutTarget = PlayerPrefs.GetString("workoutTarget");
-        playerStats.date = DateTime.Now.ToString("dd/MM/yyyy");
+        playerStats = new PlayerStats
+        {
+            terrain = PlayerPrefs.GetInt("terrainChoice"),
+            weather = PlayerPrefs.GetInt("weatherChoice"),
+            workoutTarget = PlayerPrefs.GetString("workoutTarget"),
+            date = DateTime.Now.ToString("dd/MM/yyyy")
+        };
     }
 
     private void Update()
