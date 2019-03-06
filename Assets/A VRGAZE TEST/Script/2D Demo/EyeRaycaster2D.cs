@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.VR;
 
-public class EyeRaycaster : MonoBehaviour
+public class EyeRaycaster2D : MonoBehaviour
 {
 	[SerializeField]
 	float loadingTime;
