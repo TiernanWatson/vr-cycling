@@ -8,14 +8,18 @@ public class DialogueManager : MonoBehaviour {
     public Text dialogueText;
     private Queue<string> sentences;
     public Animator animator;
+    public GameObject helpMessage;
 
     void Start()
     {
+        Debug.Log("start help manager");
+        helpMessage.SetActive(false);
         sentences = new Queue<string>();
     }
 
     public void StartDialogue(Dialogue dialogue)
     {
+        helpMessage.SetActive(true);
         Debug.Log("Starting helping manager");
 
         animator.SetBool("isOpen", true);

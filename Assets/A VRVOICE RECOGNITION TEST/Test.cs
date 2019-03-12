@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VoiceCommandTrigger : MonoBehaviour {
-    public Button VoiceCommandButton;
-    // Use this for initialization
-    void Start () {
-        VoiceCommandButton.onClick.AddListener(TaskOnClick);
-    }
+public class Test : MonoBehaviour {
+    Button btn;
+	// Use this for initialization
+	void Start () {
+        
+        btn = GameObject.Find("Button").GetComponent<Button>();
+        btn.onClick.AddListener(TaskOnClick);
+	}
+	
     void TaskOnClick()
-    {
+    {   
         AndroidJavaClass pluginClass = new AndroidJavaClass("com.plugin.speech.pluginlibrary.TestPlugin");
         Debug.Log("Call 1 Started");
 
         // Pass the name of the game object which has the onActivityResult(string recognizedText) attached to it.
         // The speech recognizer intent will return the string result to onActivityResult method of "Main Camera"
-        pluginClass.CallStatic("setReturnObject", "VoiceCommandReceiver");
+        pluginClass.CallStatic("setReturnObject", "Main Camera");
         Debug.Log("Return Object Set");
 
 
@@ -42,8 +45,8 @@ public class VoiceCommandTrigger : MonoBehaviour {
         Debug.Log("Call End");
     }
 
-    // Update is called once per frame
-    void Update () {
-	
+	// Update is called once per frame
+	void Update () {
+		
 	}
 }

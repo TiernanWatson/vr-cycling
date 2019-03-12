@@ -807,7 +807,7 @@ namespace UnityEngine.EventSystems
         protected PointerEventData.FramePressState GetGazeButtonState()
         {
 
-        var pressed = Input.GetKeyDown(gazeClickKey) || OVRInput.GetDown(joyPadClickButton) || VZPlayer.Controller.RightRight.Down;
+            var pressed = Input.GetKeyDown(gazeClickKey) || OVRInput.GetDown(joyPadClickButton) || VZPlayer.Controller.RightRight.Down;
             var released = Input.GetKeyUp(gazeClickKey) || OVRInput.GetUp(joyPadClickButton) || VZPlayer.Controller.RightRight.Released();
 
 #if UNITY_ANDROID && !UNITY_EDITOR
