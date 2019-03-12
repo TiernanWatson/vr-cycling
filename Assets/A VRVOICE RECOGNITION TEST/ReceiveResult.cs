@@ -7,7 +7,7 @@ public class ReceiveResult : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //GameObject.Find("Text").GetComponent<Text>().text = "You need to be connected to Internet";
+        GameObject.Find("Text").GetComponent<Text>().text = "You need to be connected to Internet";
 	}
 	
     void onActivityResult(string recognizedText){
