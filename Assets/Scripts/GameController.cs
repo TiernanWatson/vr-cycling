@@ -10,8 +10,14 @@ public class GameController : MonoBehaviour
     // Singleton class
     private static GameController instance;
 
+    // False if targetting by distance
+    private bool isTimeTrial;
+
     // Total distance to cycle (set in start screen)
-    private float cycleDistance;
+    private float cycleTarget;
+
+    // Time player starts training
+    private float startTime;
 
     // Spline describing track layout
     [SerializeField]
@@ -36,24 +42,37 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        cycleDistance = PlayerPrefs.GetInt("primaryUnit") * 1000f + PlayerPrefs.GetInt("secondaryUnit");
+        startTime = Time.time;
+
+        isTimeTrial = PlayerPrefs.GetString("workOutTarget").Equals("time");
+
+        cycleTarget = PlayerPrefs.GetInt("primaryUnit") * (isTimeTrial ? 60f : 1000f) + PlayerPrefs.GetInt("secondaryUnit");
 
         float trackLength = layoutSpline.GetTotalLength();
 
         // Can't place finish line beyond track length unless a loop
-        if (!layoutSpline.Loopable && cycleDistance > trackLength)
+        if (!layoutSpline.Loopable && cycleTarget > trackLength)
         {
-            cycleDistance = trackLength;
+            cycleTarget = trackLength;
         }
 
-        //PlaceFinishLine();
+        PlaceFinishLine();
+    }
+
+    private void Update()
+    {
+        if (isTimeTrial)
+        {
+            if (startTime - Time.time <= 0f)
+                FinishSession();
+        }
     }
 
     private void PlaceFinishLine()
     {
         Vector3 lineForward;
 
-        Vector3 point = layoutSpline.GetPointAtDistance(cycleDistance, out lineForward);
+        Vector3 point = layoutSpline.GetPointAtDistance(cycleTarget, out lineForward);
 
         Quaternion rotation = Quaternion.LookRotation(lineForward, Vector3.up);
 
