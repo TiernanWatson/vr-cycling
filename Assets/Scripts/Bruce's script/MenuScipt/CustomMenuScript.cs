@@ -90,7 +90,7 @@ public class CustomMenuScript : MonoBehaviour
     private bool storeChoices()
     {
         Debug.Log("CustomStart init");
-        if (primaryField.text == "" || secondaryField.text == "")
+        if (secondaryField.text == "")
         {
             FindObjectOfType<DialogueTrigger>().TriggerErrorMessage();
             Debug.Log("please enter value in input field");
@@ -98,7 +98,13 @@ public class CustomMenuScript : MonoBehaviour
         }
         else
         {
-            PlayerPrefs.SetInt("primaryUnit", int.Parse(primaryField.text));
+            if(primaryField.text == "")
+            {
+                PlayerPrefs.SetInt("primaryUnit", 0);
+            }else
+            {
+                PlayerPrefs.SetInt("primaryUnit", int.Parse(primaryField.text));
+            }
             Debug.Log("primary unit set to " + PlayerPrefs.GetInt("primaryUnit"));
             PlayerPrefs.SetInt("secondaryUnit", int.Parse(secondaryField.text));
             Debug.Log("secondary unit set to " + PlayerPrefs.GetInt("secondaryUnit"));
