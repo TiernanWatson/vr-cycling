@@ -48,22 +48,26 @@ public class GameController : MonoBehaviour
 
         cycleTarget = PlayerPrefs.GetInt("primaryUnit") * (isTimeTrial ? 60f : 1000f) + PlayerPrefs.GetInt("secondaryUnit");
 
-        float trackLength = layoutSpline.GetTotalLength();
-
-        // Can't place finish line beyond track length unless a loop
-        if (!layoutSpline.Loopable && cycleTarget > trackLength)
+        // Only want to place finish if not a time trial
+        if (!isTimeTrial)
         {
-            cycleTarget = trackLength;
-        }
+            float trackLength = layoutSpline.GetTotalLength();
 
-        PlaceFinishLine();
+            // Can't place finish line beyond track length unless a loop
+            if (!layoutSpline.Loopable && cycleTarget > trackLength)
+            {
+                cycleTarget = trackLength;
+            }
+
+            PlaceFinishLine();
+        }
     }
 
     private void Update()
     {
         if (isTimeTrial)
         {
-            if (startTime - Time.time <= 0f)
+            if (Time.time - startTime >= cycleTarget)
                 FinishSession();
         }
     }
