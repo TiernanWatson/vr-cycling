@@ -38,6 +38,7 @@ public class DialogueManager : MonoBehaviour {
         if (sentences.Count == 0)
         {
             EndDialogue();
+            helpMessage.SetActive(false);
             return;
         }
         string sentence = sentences.Dequeue();

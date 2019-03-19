@@ -20,10 +20,17 @@ namespace TalesFromTheRift
 		
 		void Refresh()
 		{
-			// Show the current board
-			alphaBoardUnsfhifted.SetActive(!AltDown && !ShiftDown);
+            if (CanvasKeyboard.numPad)
+            {
+                alphaBoardUnsfhifted.SetActive(AltDown && !ShiftDown);
+                numberBoardUnshifted.SetActive(!AltDown && !ShiftDown);
+            }else
+            {
+                alphaBoardUnsfhifted.SetActive(!AltDown && !ShiftDown);
+                numberBoardUnshifted.SetActive(AltDown && !ShiftDown);
+            }
+            // Show the current board
 			alphaBoardSfhifted.SetActive(!AltDown && ShiftDown);
-			numberBoardUnshifted.SetActive(AltDown && !ShiftDown);
 			numberBoardShifted.SetActive(AltDown && ShiftDown);
 		}
 

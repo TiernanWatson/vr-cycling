@@ -8,9 +8,11 @@ namespace TalesFromTheRift
 {
 	public class CanvasKeyboard : MonoBehaviour 
 	{
-		#region CanvasKeyboard Instantiation
+        #region CanvasKeyboard Instantiation
 
-		public enum CanvasKeyboardType
+        public static bool numPad;
+
+        public enum CanvasKeyboardType
 		{
 			ASCIICapable
 		}
