@@ -6,9 +6,11 @@ public class BezierCurve : Line
     // Number of divisions in bezier approximation
     private const int LENGTH_ACCURACY = 10;
 
+    // World space
     [SerializeField]
     protected Vector3 controlPoint1, controlPoint2;
 
+    // Relative to parent
     [SerializeField]
     protected Vector3 localControlPoint1, localControlPoint2;
 

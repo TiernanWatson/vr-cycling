@@ -3,9 +3,11 @@ using System.Collections;
 
 public class Line : MonoBehaviour
 {
+    // World space
     [SerializeField]
     protected Vector3 point1, point2;
 
+    // Relative to parent
     [SerializeField]
     protected Vector3 localPoint1, localPoint2;
 
