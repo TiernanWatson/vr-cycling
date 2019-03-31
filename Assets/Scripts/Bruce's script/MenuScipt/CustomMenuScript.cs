@@ -21,6 +21,7 @@ public class CustomMenuScript : MonoBehaviour
 {
 
     public string workOutTarget = "time";
+    public bool debug = true;
     public Button targetButton;
     public InputField primaryField;
     public InputField secondaryField;
@@ -40,13 +41,21 @@ public class CustomMenuScript : MonoBehaviour
 
     }
 
+    void DebugMessage(String debugMessage)
+    {
+        if (debug)
+        {
+           Debug.Log(debugMessage);
+        }
+    }
+
     private void ResetVariable()
     {
         ToTargetByTime();
         weatherDropDown.value = 0;
         terrainDropDown.value = 0;
         ResetInputField();
-        Debug.Log("UI variable reset");
+        DebugMessage("UI variable reset");
     }
 
     private void ResetInputField()
