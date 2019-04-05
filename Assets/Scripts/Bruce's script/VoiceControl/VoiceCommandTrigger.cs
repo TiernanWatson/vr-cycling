@@ -29,6 +29,7 @@ public class VoiceCommandTrigger : MonoBehaviour {
         pluginClass.CallStatic("setMaxResults", 3);
         Debug.Log("Max Results Set");
 
+
         // The following line sets the question which appears on intent over the microphone icon
         pluginClass.CallStatic("changeQuestion", "Hello, How can I help you???");
         Debug.Log("Question Set");
