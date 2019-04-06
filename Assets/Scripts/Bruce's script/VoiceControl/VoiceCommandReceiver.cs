@@ -11,8 +11,6 @@ public class VoiceCommandReceiver : MonoBehaviour {
     public CustomMenuScript customMenuScript;
     public GameObject recordMenu;
     public RecordMenuScript recordMenuScript;
-    public GameObject resultMenu;
-    public ResultMenuScript resultMenuScript;
     public GameObject current;
 
     private Dictionary<string, System.Action> activityDictionary = new Dictionary<string, System.Action>();
@@ -34,6 +32,7 @@ public class VoiceCommandReceiver : MonoBehaviour {
         activityDictionary.Add("quick start", NavigateQuickStart);
         activityDictionary.Add("custom start", NavigateCustomStart);
         activityDictionary.Add("record menu", NavigateRecord);
+        
         activityDictionary.Add("quit", QuitGame);
     }
 

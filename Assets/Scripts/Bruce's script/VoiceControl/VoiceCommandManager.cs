@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
+
 
 public class VoiceCommandManager : MonoBehaviour {
 
@@ -10,7 +12,6 @@ public class VoiceCommandManager : MonoBehaviour {
     AndroidJavaObject unityActivity;
     AndroidJavaObject unityContext;
     AndroidJavaObject pluginClass;
-
 
     /*  
      *  add listener to button for triggering the function
@@ -22,7 +23,6 @@ public class VoiceCommandManager : MonoBehaviour {
         unityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         unityActivity = unityClass.GetStatic<AndroidJavaObject>("currentActivity");
         unityContext = unityActivity.Call<AndroidJavaObject>("getApplicationContext");
-        StartSpeechToTextProcess();
     }
 
 
@@ -33,10 +33,10 @@ public class VoiceCommandManager : MonoBehaviour {
         AndroidJavaObject unityActivity = unityClass.GetStatic<AndroidJavaObject>("currentActivity");
         AndroidJavaObject unityContext = unityActivity.Call<AndroidJavaObject>("getApplicationContext");
 
-        unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(runOnUiThread));
+        unityActivity.Call("speechToText", new AndroidJavaRunnable(speechToText));
     }
 
-    void runOnUiThread()
+    void speechToText()
     {
         Debug.Log("Plugin Class initialize");
         pluginClass = new AndroidJavaObject("com.example.speechtotextplugin.SpeechToText");
