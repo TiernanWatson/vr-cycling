@@ -23,6 +23,7 @@ public class VoiceCommandManager : MonoBehaviour {
         unityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         unityActivity = unityClass.GetStatic<AndroidJavaObject>("currentActivity");
         unityContext = unityActivity.Call<AndroidJavaObject>("getApplicationContext");
+        StartSpeechToTextProcess();
     }
 
 
@@ -32,11 +33,10 @@ public class VoiceCommandManager : MonoBehaviour {
         AndroidJavaClass unityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         AndroidJavaObject unityActivity = unityClass.GetStatic<AndroidJavaObject>("currentActivity");
         AndroidJavaObject unityContext = unityActivity.Call<AndroidJavaObject>("getApplicationContext");
-
-        unityActivity.Call("speechToText", new AndroidJavaRunnable(speechToText));
+        unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(runOnUiThread)); // for functions that need to run on main thread
     }
 
-    void speechToText()
+    void runOnUiThread()
     {
         Debug.Log("Plugin Class initialize");
         pluginClass = new AndroidJavaObject("com.example.speechtotextplugin.SpeechToText");

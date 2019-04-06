@@ -22,7 +22,10 @@ public class CustomMenuScript : MonoBehaviour
 
     public string workOutTarget = "time";
     public bool debug = true;
-    public Button targetButton;
+    public Button targetBtn;
+    public Button startBtn;
+    public Button backBtn;
+    public Button helpBtn;
     public InputField primaryField;
     public InputField secondaryField;
     public Dropdown weatherDropDown;
@@ -41,21 +44,13 @@ public class CustomMenuScript : MonoBehaviour
 
     }
 
-    void DebugMessage(String debugMessage)
-    {
-        if (debug)
-        {
-           Debug.Log(debugMessage);
-        }
-    }
-
     private void ResetVariable()
     {
         ToTargetByTime();
         weatherDropDown.value = 0;
         terrainDropDown.value = 0;
         ResetInputField();
-        DebugMessage("UI variable reset");
+        Debug.Log("UI variable reset");
     }
 
     private void ResetInputField()
@@ -67,7 +62,7 @@ public class CustomMenuScript : MonoBehaviour
     public void ToTargetByTime()
     {
         workOutTarget = "time";
-        targetButton.GetComponentInChildren<Text>().text = "Target By Time";
+        targetBtn.GetComponentInChildren<Text>().text = "Target By Time";
         primaryField.placeholder.GetComponent<Text>().text = "Hour(s)";
         secondaryField.placeholder.GetComponent<Text>().text = "Minute(s)";
         Debug.Log("switch to target by time");
@@ -76,7 +71,7 @@ public class CustomMenuScript : MonoBehaviour
     public void ToTargetByDistance()
     {
         workOutTarget = "distance";
-        targetButton.GetComponentInChildren<Text>().text = "Target By Distance";
+        targetBtn.GetComponentInChildren<Text>().text = "Target By Distance";
         primaryField.placeholder.GetComponent<Text>().text = "km";
         secondaryField.placeholder.GetComponent<Text>().text = "m";
         Debug.Log("switch to target by distance");
@@ -136,4 +131,26 @@ public class CustomMenuScript : MonoBehaviour
             SceneManager.LoadScene("DevMap");
         }
     }
+
+    public void ProcessVoiceCommand(string command)
+    {
+        Debug.Log("command passed into custom menu script");
+        if (command.Contains("start"))
+        {
+            startBtn.onClick.Invoke();
+        }
+        else if (command.Contains("switch"))
+        {
+            targetBtn.onClick.Invoke();
+        }
+        else if (command.Contains("back"))
+        {
+            backBtn.onClick.Invoke();
+        }
+        else if (command.Contains("help"))
+        {
+            helpBtn.onClick.Invoke();
+        }
+    }
+
 }

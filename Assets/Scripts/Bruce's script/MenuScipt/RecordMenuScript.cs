@@ -17,6 +17,8 @@ public class RecordMenuScript : MonoBehaviour {
     public Text terrainVal;
     public Text weatherVal;
     public Text heartRateVal;
+    public Button backBtn;
+    public Button helpBtn;
 
     void Start()
     {
@@ -101,5 +103,18 @@ public class RecordMenuScript : MonoBehaviour {
         terrainVal.text = getTerrain(playerStat.terrain);
         weatherVal.text = getWeather(playerStat.weather);
         heartRateVal.text = playerStat.heartrate.ToString() + " BPM";
+    }
+
+    public void ProcessVoiceCommand(string command)
+    {
+        Debug.Log("command passed into starting menu script");
+        if (command.Contains("back"))
+        {
+            backBtn.onClick.Invoke();
+        }
+        else if (command.Contains("help"))
+        {
+            helpBtn.onClick.Invoke();
+        }
     }
 }
