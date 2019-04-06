@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
+
 public class TestJavaPluginReceiver : MonoBehaviour {
 
     public Text myText;
@@ -24,19 +25,26 @@ public class TestJavaPluginReceiver : MonoBehaviour {
     void Update () {
 	}
 
+    void RequestAudioPermission()
+    {
+
+    }
+
     void StartSpeechToTextProcess()
     {
         AndroidJavaClass unityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         AndroidJavaObject unityActivity = unityClass.GetStatic<AndroidJavaObject>("currentActivity");
         AndroidJavaObject unityContext = unityActivity.Call<AndroidJavaObject>("getApplicationContext");
-
-        unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(runOnUiThread));
+        unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(runOnUiThread)); // for functions that need to run on main thread
     }
 
     void runOnUiThread()
     {
         Debug.Log("Plugin Class initialize");
         pluginClass = new AndroidJavaObject("com.example.speechtotextplugin.SpeechToText");
+
+        //Debug.Log("Request Audio Permission");
+        //pluginClass.Call("requestAudioPermissions", unityContext, unityActivity);
 
         Debug.Log("Speech Recognizer initialize");
         pluginClass.Call("InitializeSpeechRecognizer", unityContext);
