@@ -19,9 +19,12 @@ public class VoiceCommandReceiver : MonoBehaviour {
     void PassResultToCurrentMenu(string command)
     {
         myText.text = command;
+        Debug.Log("CMD: " + command);
+
         if (current == startingMenu)
         {
             Debug.Log("current in starting menu");
+            
             startingMenuScript.ProcessVoiceCommand(command);
         }
     }

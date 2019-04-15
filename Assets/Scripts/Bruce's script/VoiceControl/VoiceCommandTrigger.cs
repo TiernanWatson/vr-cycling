@@ -8,6 +8,7 @@ public class VoiceCommandTrigger : MonoBehaviour {
     // Use this for initialization
     void Start () {
         VoiceCommandButton.onClick.AddListener(TaskOnClick);
+        TaskOnClick();
     }
     void TaskOnClick()
     {
