@@ -82,14 +82,11 @@ public class Spline : MonoBehaviour
     {
         float distanceLeft = distance;
 
-        Debug.Log("There is: " + distance + "m to go");
-
         int i = 0;
         while (lineList[i].GetLength() < distanceLeft)
         {
             distanceLeft -= lineList[i].GetLength();
             i++;
-            Debug.Log("There is: " + distanceLeft + "m to go");
         }
 
         forward = lineList[i].GetLineForward();

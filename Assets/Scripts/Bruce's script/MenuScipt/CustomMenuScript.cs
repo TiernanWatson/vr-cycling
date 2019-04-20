@@ -19,30 +19,16 @@ using System.Collections.Generic;
 
 public class CustomMenuScript : MonoBehaviour
 {
+    [SerializeField] private string workOutTarget = "time";
 
-    public string workOutTarget = "time";
-    public bool debug = true;
-    public Button targetBtn;
-    public Button startBtn;
-    public Button backBtn;
-    public Button helpBtn;
-    public InputField primaryField;
-    public InputField secondaryField;
-    public Dropdown weatherDropDown;
-    public Dropdown terrainDropDown;
-
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    [SerializeField] private Button targetBtn;
+    [SerializeField] private Button startBtn;
+    [SerializeField] private Button backBtn;
+    [SerializeField] private Button helpBtn;
+    [SerializeField] private InputField primaryField;
+    [SerializeField] private InputField secondaryField;
+    [SerializeField] private Dropdown weatherDropDown;
+    [SerializeField] private Dropdown terrainDropDown;
 
     private void ResetVariable()
     {
@@ -50,7 +36,6 @@ public class CustomMenuScript : MonoBehaviour
         weatherDropDown.value = 0;
         terrainDropDown.value = 0;
         ResetInputField();
-        Debug.Log("UI variable reset");
     }
 
     private void ResetInputField()
@@ -62,62 +47,58 @@ public class CustomMenuScript : MonoBehaviour
     public void ToTargetByTime()
     {
         workOutTarget = "time";
+
         targetBtn.GetComponentInChildren<Text>().text = "Target By Time";
         primaryField.placeholder.GetComponent<Text>().text = "Hour(s)";
         secondaryField.placeholder.GetComponent<Text>().text = "Minute(s)";
-        Debug.Log("switch to target by time");
     }
 
     public void ToTargetByDistance()
     {
         workOutTarget = "distance";
+
         targetBtn.GetComponentInChildren<Text>().text = "Target By Distance";
         primaryField.placeholder.GetComponent<Text>().text = "km";
         secondaryField.placeholder.GetComponent<Text>().text = "m";
-        Debug.Log("switch to target by distance");
     }
 
     public void SwitchTargetButtonPressed()
     {
-        if (workOutTarget == "time")
+        if (workOutTarget.Equals("time"))
         {
             ResetInputField();
             ToTargetByDistance();
         }
-        else if (workOutTarget == "distance")
+        else if (workOutTarget.Equals("distance"))
         {
             ResetInputField();
             ToTargetByTime();
         }
     }
 
-    private bool storeChoices()
+    private bool StoreChoices()
     {
-        Debug.Log("CustomStart init");
-        if (secondaryField.text == "")
+        if (string.IsNullOrEmpty(secondaryField.text))
         {
             FindObjectOfType<DialogueTrigger>().TriggerErrorMessage();
-            Debug.Log("please enter value in input field");
             return false;
         }
         else
         {
-            if(primaryField.text == "")
+            if(string.IsNullOrEmpty(primaryField.text))
             {
                 PlayerPrefs.SetInt("primaryUnit", 0);
-            }else
+            }
+            else
             {
                 PlayerPrefs.SetInt("primaryUnit", int.Parse(primaryField.text));
             }
-            Debug.Log("primary unit set to " + PlayerPrefs.GetInt("primaryUnit"));
+
             PlayerPrefs.SetInt("secondaryUnit", int.Parse(secondaryField.text));
-            Debug.Log("secondary unit set to " + PlayerPrefs.GetInt("secondaryUnit"));
             PlayerPrefs.SetInt("weatherChoice", weatherDropDown.value);
-            Debug.Log("weather choice set to " + PlayerPrefs.GetInt("weatherChoice"));
             PlayerPrefs.SetInt("terrainChoice", terrainDropDown.value);
-            Debug.Log("terrain choice set to " + PlayerPrefs.GetInt("terrainChoice"));
             PlayerPrefs.SetString("workOutTarget", workOutTarget);
-            Debug.Log("work out target set to " + PlayerPrefs.GetString("workOutTarget"));
+
             return true;
         }
 
@@ -125,7 +106,7 @@ public class CustomMenuScript : MonoBehaviour
 
     public void StartButtonPressed()
     {
-        if (storeChoices())
+        if (StoreChoices())
         {
             FindObjectOfType<DialogueManager>().EndDialogue();
             SceneManager.LoadScene("DevMap");
@@ -134,7 +115,6 @@ public class CustomMenuScript : MonoBehaviour
 
     public void ProcessVoiceCommand(string command)
     {
-        Debug.Log("command passed into custom menu script");
         if (command.Contains("start"))
         {
             startBtn.onClick.Invoke();

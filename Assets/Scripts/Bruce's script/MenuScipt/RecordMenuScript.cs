@@ -6,19 +6,19 @@ using System.Collections.Generic;
 
 public class RecordMenuScript : MonoBehaviour {
 
-    public PlayerStats playerStat;
-    public Dropdown records;
-    public string targetRecord;
-    public Text distanceVal;
-    public Text timeTakenVal;
-    public Text averageSpeedVal;
-    public Text greatestSpeedVal;
-    public Text dateVal;
-    public Text terrainVal;
-    public Text weatherVal;
-    public Text heartRateVal;
-    public Button backBtn;
-    public Button helpBtn;
+    [SerializeField] private PlayerStats playerStat;
+    [SerializeField] private Dropdown records;
+    [SerializeField] private string targetRecord;
+    [SerializeField] private Text distanceVal;
+    [SerializeField] private Text timeTakenVal;
+    [SerializeField] private Text averageSpeedVal;
+    [SerializeField] private Text greatestSpeedVal;
+    [SerializeField] private Text dateVal;
+    [SerializeField] private Text terrainVal;
+    [SerializeField] private Text weatherVal;
+    [SerializeField] private Text heartRateVal;
+    [SerializeField] private Button backBtn;
+    [SerializeField] private Button helpBtn;
 
     void Start()
     {
@@ -33,11 +33,13 @@ public class RecordMenuScript : MonoBehaviour {
 
     public void DropDownOptionUpdate()
     {
-        List<string> recordOptions = new List<string> { };
+        List<string> recordOptions = new List<string>();
+
         for(int i = 0; i < PlayerPrefs.GetInt("workoutNo"); i++)
         {
             recordOptions.Add("Work Out " + (i + 1));
         }
+
         records.ClearOptions();
         records.AddOptions(recordOptions);
     }
@@ -48,45 +50,39 @@ public class RecordMenuScript : MonoBehaviour {
         int inputInt = (int)input;
         int hour = inputInt / 60;
         int minute = inputInt % 60;
+
         string output = hour.ToString() + " hour " + minute.ToString() + " minutes";
-        Debug.Log(hour.ToString() + " hour " + minute.ToString() + " minutes");
+        
         return output;
     }
 
-    public string getTerrain(int input)
+    public string GetTerrain(int input)
     {
-        if(input == 0)
+        switch (input)
         {
-            return "Plain Road";
-        }else if(input == 1)
-        {
-            return "Mountain";
-        }else
-        {
-            return "City";
+            case 0:
+                return "Plain Road";
+            case 1:
+                return "Mountain";
+            default:
+                return "City";
         }
     }
 
-    public string getWeather(int input)
+    public string GetWeather(int input)
     {
-        if (input == 0)
+        switch (input)
         {
-            return "Sunny";
-        }
-        else if (input == 1)
-        {
-            return "Cloudy";
-        }
-        else if (input == 2)
-        {
-            return "Rainy";
-        }
-        else if (input == 3)
-        {
-            return "Windy";
-        }else
-        {
-            return "Misty";
+            case 0:
+                return "Sunny";
+            case 1:
+                return "Cloudy";
+            case 2:
+                return "Rainy";
+            case 3:
+                return "Windy";
+            default:
+                return "Misty";
         }
     }
 
@@ -100,14 +96,13 @@ public class RecordMenuScript : MonoBehaviour {
         averageSpeedVal.text = playerStat.speed.ToString() + " km / hr";
         greatestSpeedVal.text = playerStat.topSpeed.ToString() + " km / hr";
         dateVal.text = playerStat.date;
-        terrainVal.text = getTerrain(playerStat.terrain);
-        weatherVal.text = getWeather(playerStat.weather);
+        terrainVal.text = GetTerrain(playerStat.terrain);
+        weatherVal.text = GetWeather(playerStat.weather);
         heartRateVal.text = playerStat.heartrate.ToString() + " BPM";
     }
 
     public void ProcessVoiceCommand(string command)
     {
-        Debug.Log("command passed into starting menu script");
         if (command.Contains("back"))
         {
             backBtn.onClick.Invoke();

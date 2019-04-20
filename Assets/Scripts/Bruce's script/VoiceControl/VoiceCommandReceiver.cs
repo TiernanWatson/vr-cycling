@@ -17,24 +17,15 @@ public class VoiceCommandReceiver : MonoBehaviour {
 
     void PassResultToCurrentMenu(string command)
     {
-        Debug.Log("CMD: " + command);
-
         if (current == startingMenu)
         {
-            Debug.Log("current in starting menu");
-            
             startingMenuScript.ProcessVoiceCommand(command);
         }
     }
 
-    // Use this for initialization
-    void Start () {
+    void Start()
+    {
         current = startingMenu;
     }
 
-
-    // Update is called once per frame
-    void Update () {
-	
-	}
 }
