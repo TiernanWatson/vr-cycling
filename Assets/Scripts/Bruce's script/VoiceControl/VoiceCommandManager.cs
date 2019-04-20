@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 public class VoiceCommandManager : MonoBehaviour {
 
-    public Text myText;
     public Button voiceCommandTrigger;
     AndroidJavaClass unityClass;
     AndroidJavaObject unityActivity;
@@ -27,7 +26,6 @@ public class VoiceCommandManager : MonoBehaviour {
     }
 
 
-    // 
     void StartSpeechToTextProcess()
     {
         AndroidJavaClass unityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
@@ -41,18 +39,10 @@ public class VoiceCommandManager : MonoBehaviour {
         Debug.Log("Plugin Class initialize");
         pluginClass = new AndroidJavaObject("com.example.speechtotextplugin.SpeechToText");
 
-        //Debug.Log("Request Audio Permission");
-        //pluginClass.Call("requestAudioPermissions", unityContext, unityActivity);
-
         Debug.Log("Speech Recognizer initialize");
         pluginClass.Call("InitializeSpeechRecognizer", unityContext);
 
         Debug.Log("Speech to text process started");
         pluginClass.Call("StartSpeechToTextPlugin");
-    }
-
-    void ProcessResult(string result)
-    {
-        myText.text = result;
     }
 }

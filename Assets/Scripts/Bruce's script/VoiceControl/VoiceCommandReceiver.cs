@@ -12,13 +12,11 @@ public class VoiceCommandReceiver : MonoBehaviour {
     public GameObject recordMenu;
     public RecordMenuScript recordMenuScript;
     public GameObject current;
-    public Text myText;
 
     private Dictionary<string, System.Action> activityDictionary = new Dictionary<string, System.Action>();
 
     void PassResultToCurrentMenu(string command)
     {
-        myText.text = command;
         Debug.Log("CMD: " + command);
 
         if (current == startingMenu)
