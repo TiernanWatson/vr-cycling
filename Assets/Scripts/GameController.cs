@@ -90,6 +90,7 @@ public class GameController : MonoBehaviour
 
     public void FinishSession()
     {
+        gameFinished = true;
         CrossFinishLine.Invoke();
     }
 
