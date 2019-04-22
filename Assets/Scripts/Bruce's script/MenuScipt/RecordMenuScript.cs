@@ -19,6 +19,7 @@ public class RecordMenuScript : MonoBehaviour {
     [SerializeField] private Text heartRateVal;
     [SerializeField] private Button backBtn;
     [SerializeField] private Button helpBtn;
+    public VoiceCommandReceiver voiceCommandReceiver;
 
     void Start()
     {
@@ -105,6 +106,7 @@ public class RecordMenuScript : MonoBehaviour {
     {
         if (command.Contains("back"))
         {
+            voiceCommandReceiver.current = voiceCommandReceiver.startingMenu;
             backBtn.onClick.Invoke();
         }
         else if (command.Contains("help"))

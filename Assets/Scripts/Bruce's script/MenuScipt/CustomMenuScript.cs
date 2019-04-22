@@ -29,6 +29,7 @@ public class CustomMenuScript : MonoBehaviour
     [SerializeField] private InputField secondaryField;
     [SerializeField] private Dropdown weatherDropDown;
     [SerializeField] private Dropdown terrainDropDown;
+    public VoiceCommandReceiver voiceCommandReceiver;
 
     private void ResetVariable()
     {
@@ -117,6 +118,7 @@ public class CustomMenuScript : MonoBehaviour
     {
         if (command.Contains("start"))
         {
+            voiceCommandReceiver.current = voiceCommandReceiver.startingMenu;
             startBtn.onClick.Invoke();
         }
         else if (command.Contains("switch"))
@@ -125,6 +127,7 @@ public class CustomMenuScript : MonoBehaviour
         }
         else if (command.Contains("back"))
         {
+            voiceCommandReceiver.current = voiceCommandReceiver.startingMenu;
             backBtn.onClick.Invoke();
         }
         else if (command.Contains("help"))

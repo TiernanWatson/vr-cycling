@@ -13,13 +13,22 @@ public class VoiceCommandReceiver : MonoBehaviour {
     public RecordMenuScript recordMenuScript;
     public GameObject current;
 
-    private Dictionary<string, System.Action> activityDictionary = new Dictionary<string, System.Action>();
-
     void PassResultToCurrentMenu(string command)
     {
         if (current == startingMenu)
         {
             startingMenuScript.ProcessVoiceCommand(command);
+        }
+        else if(current == customStartMenu)
+        {
+            customMenuScript.ProcessVoiceCommand(command);
+        }
+        else if(current == recordMenu)
+        {
+            recordMenuScript.ProcessVoiceCommand(command);
+        }else
+        {
+            Debug.Log("current state unknown!");
         }
     }
 
