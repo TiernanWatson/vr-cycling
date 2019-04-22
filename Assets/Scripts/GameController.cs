@@ -10,6 +10,9 @@ public class GameController : MonoBehaviour
     // Singleton class
     private static GameController instance;
 
+    // False if player hsa crossed finish line
+    private bool gameFinished;
+
     // False if targetting by distance
     private bool isTimeTrial;
 
@@ -46,7 +49,8 @@ public class GameController : MonoBehaviour
 
         isTimeTrial = PlayerPrefs.GetString("workOutTarget").Equals("time");
 
-        cycleTarget = PlayerPrefs.GetInt("primaryUnit") * (isTimeTrial ? 60f : 1000f) + PlayerPrefs.GetInt("secondaryUnit");
+        cycleTarget = PlayerPrefs.GetInt("primaryUnit") * (isTimeTrial ? 60f * 60f : 1000f) 
+            + PlayerPrefs.GetInt("secondaryUnit") * (isTimeTrial ? 60f : 1f);
 
         // Only want to place finish if not a time trial
         if (!isTimeTrial)
@@ -100,6 +104,11 @@ public class GameController : MonoBehaviour
             
             return instance;
         }
+    }
+
+    public bool GameFinished
+    {
+        get { return gameFinished; }
     }
 
     #endregion

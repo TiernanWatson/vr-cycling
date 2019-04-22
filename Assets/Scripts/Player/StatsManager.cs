@@ -24,6 +24,10 @@ public class StatsManager : MonoBehaviour
 
     private void Update()
     {
+        // Don't results still updating when game is finished
+        if (GameController.Instance.GameFinished)
+            return;
+
         playerStats.timeTravelled = Time.time - startTime;
 
         playerStats.distanceTravelled = VZPlayer.Controller.Distance;
