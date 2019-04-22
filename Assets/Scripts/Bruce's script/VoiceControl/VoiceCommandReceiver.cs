@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class VoiceCommandReceiver : MonoBehaviour {
 
+    public GameObject promptIDMenu;
     public GameObject startingMenu;
     public StartingMenuScript startingMenuScript;
     public GameObject customStartMenu;
@@ -26,7 +27,12 @@ public class VoiceCommandReceiver : MonoBehaviour {
         else if(current == recordMenu)
         {
             recordMenuScript.ProcessVoiceCommand(command);
-        }else
+        }
+        else if(current == promptIDMenu)
+        {
+            return;
+        }
+        else
         {
             Debug.Log("current state unknown!");
         }
