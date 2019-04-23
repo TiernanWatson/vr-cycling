@@ -30,6 +30,10 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GameObject finishLine;
 
+    // For turning on/off rain
+    [SerializeField]
+    private GameObject rainObj;
+
     private void Awake()
     {
         if (instance == null)
@@ -64,6 +68,18 @@ public class GameController : MonoBehaviour
             }
 
             PlaceFinishLine();
+        }
+
+        // Set up weather
+        int weather = PlayerPrefs.GetInt("weatherChoice");
+        switch (weather)
+        {
+            case 1:
+                rainObj.SetActive(true);
+                break;
+            default:
+                rainObj.SetActive(false);
+                break;
         }
     }
 

@@ -100,6 +100,8 @@ public class CustomMenuScript : MonoBehaviour
             PlayerPrefs.SetInt("terrainChoice", terrainDropDown.value);
             PlayerPrefs.SetString("workOutTarget", workOutTarget);
 
+            PlayerPrefs.Save();
+
             return true;
         }
 
@@ -111,7 +113,7 @@ public class CustomMenuScript : MonoBehaviour
         {
             FindObjectOfType<DialogueManager>().EndDialogue();
 
-            string mapToLoad = PlayerPrefs.GetString("terrainChoice").Equals("Plain Road")
+            string mapToLoad = PlayerPrefs.GetInt("terrainChoice") == 0
                 ? "DevMap" : "DirtTrack";
 
             SceneManager.LoadScene(mapToLoad);

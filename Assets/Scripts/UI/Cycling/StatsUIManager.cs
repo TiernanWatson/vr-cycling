@@ -26,6 +26,8 @@ public class StatsUIManager : MonoBehaviour
     private Text endTopBPM;
     [SerializeField]
     private Text endTimeTaken;
+    [SerializeField]
+    private Button continueBtn;
 
 	private void Start()
     {
@@ -54,6 +56,9 @@ public class StatsUIManager : MonoBehaviour
 
     private void Update()
     {
+        if (VZPlayer.Controller.RightRight.Down || Input.GetKeyDown(KeyCode.KeypadEnter))
+            continueBtn.onClick.Invoke();
+
         if (haltUpdate)
             return;
 
@@ -73,7 +78,7 @@ public class StatsUIManager : MonoBehaviour
 
     private void ShowResultScreen()
     {
-        haltUpdate = false;
+        haltUpdate = true;
 
         PlayerStats stats = statsManager.Stats;
 
