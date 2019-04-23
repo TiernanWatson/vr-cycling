@@ -13,6 +13,8 @@ public class StatsManager : MonoBehaviour
         localWorkoutNo = PlayerPrefs.GetInt("workoutNo");
         startTime = Time.time;
 
+        GameController.Instance.CrossFinishLine += RecordStats;
+
         playerStats = new PlayerStats
         {
             terrain = PlayerPrefs.GetInt("terrainChoice"),
@@ -20,6 +22,11 @@ public class StatsManager : MonoBehaviour
             workoutTarget = PlayerPrefs.GetString("workoutTarget"),
             date = DateTime.Now.ToString("dd/MM/yyyy")
         };
+    }
+
+    private void OnDisable()
+    {
+        GameController.Instance.CrossFinishLine -= RecordStats;
     }
 
     private void Update()
@@ -47,11 +54,13 @@ public class StatsManager : MonoBehaviour
             playerStats.topSpeed = playerStats.speed;
     }
 
-    private void OnDisable()
+    private void RecordStats()
     {
         localWorkoutNo++;
 
         PlayerStats.SaveToJSONFile("workout" + localWorkoutNo + ".json", playerStats);
+
+        DatabaseManager.Instance.AddReading(PlayerPrefs.GetInt("uID"), playerStats);
 
         PlayerPrefs.SetInt("workoutNo", localWorkoutNo);
         PlayerPrefs.Save();

@@ -110,7 +110,11 @@ public class CustomMenuScript : MonoBehaviour
         if (StoreChoices())
         {
             FindObjectOfType<DialogueManager>().EndDialogue();
-            SceneManager.LoadScene("DevMap");
+
+            string mapToLoad = PlayerPrefs.GetString("terrainChoice").Equals("Plain Road")
+                ? "DevMap" : "DirtTrack";
+
+            SceneManager.LoadScene(mapToLoad);
         }
     }
 
